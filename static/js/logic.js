@@ -17,4 +17,13 @@ d3.json(url).then(function (data) {
 		"Street Map": street,
 		"Topographic Map": topo
 	};
+
+	// add leaflet map to map div
+	let myMap = L.map("map", {
+		layers: [street]
+	});
+
+	L.control.layers(baseMaps, {
+		collapsed: false
+	}).addTo(myMap);
 });
