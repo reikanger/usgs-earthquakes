@@ -20,8 +20,21 @@ d3.json(url).then(function (data) {
 	});
 
 	// Function to set marker style:
-	function setMarkerStyle(magnitude) {
-		return False;
+	function getMarkerStyle(magnitude, depth) {
+		console.log(`Mag: ${magnitude} - Depth: ${depth}`);
+		let radius = magnitude * 2; // size scaling factor
+		let color = depth > 75 ? '#d93025' :
+								depth > 50 ? '#f2994a' :
+								depth > 25 ? '#f2c94c' :
+								'#27ae60';
+		return {
+			radius: radius,
+			fillColor: color,
+			color: "#000",
+      weight: 1,
+      opacity: 1,
+      fillOpacity: 0.8
+		};
 	};
 
 	// Create a baseMaps object to store the two map layers with friendly names
@@ -37,8 +50,20 @@ d3.json(url).then(function (data) {
 
 	// loop data object for 'data.features' content
 	for (let i = 0; i < data.features.length; i++) {
+		// set marker style
+		let magnitude = data.features[i].properties.mag;
+		let depth = data.features[i].geometry.coordinates[2];
+		let markerStyle = getMarkerStyle(magnitude, depth);
+
 		// create a new Leaflet geoJSON layer, and attach a popup with more info
-		feature = L.geoJSON(data.features[i]).bindPopup(`<h1>${data.features[i].properties.place}</h1><h3>Magnitude ${data.features[i].properties.mag}</h3>`);
+		//feature = L.geoJSON(data.features[i]).bindPopup(`<h1>${data.features[i].properties.place}</h1><h3>Magnitude ${data.features[i].properties.mag}</h3>`);
+		let lon = data.features[i].geometry.coordinates[0];
+		let lat = data.features[i].geometry.coordinates[1];
+		let feature = L.circleMarker(
+			[lat, lon],
+			markerStyle
+		)
+		.bindPopup(`<h1>${data.features[i].properties.place}</h1><h3>Magnitude ${magnitude}</h3><h3>Depth ${depth}</h3>`);
 
 		// add new layer to features_array
 		features_array.push(feature);
