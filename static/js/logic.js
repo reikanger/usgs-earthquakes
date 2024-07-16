@@ -3,10 +3,6 @@ let url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.ge
 
 // request data from URL and execute callback function once loaded
 d3.json(url).then(function (data) {
-	// print to console for debugging - confirmed GeoJSON format
-	console.log(data);
-	console.log(data.features);
-
 	// Base Maps Layers:
 	//
 	// create base map layer
