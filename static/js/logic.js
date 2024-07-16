@@ -22,11 +22,13 @@ d3.json(url).then(function (data) {
 	// Function to set marker style:
 	function getMarkerStyle(magnitude, depth) {
 		console.log(`Mag: ${magnitude} - Depth: ${depth}`);
-		let radius = magnitude * 2; // size scaling factor
-		let color = depth > 75 ? '#d93025' :
-								depth > 50 ? '#f2994a' :
-								depth > 25 ? '#f2c94c' :
-								'#27ae60';
+		let radius = magnitude * 4; // size scaling factor
+		let color = depth >= 90.0 ? '#ff5f65' :
+								depth >= 70.0 ? '#fca35d' :
+								depth >= 50.0 ? '#fdb72a' :
+								depth >= 30.0 ? '#f7db11' :
+								depth >= 10.0 ? '#dcf400' :
+								'#a3f600';
 		return {
 			radius: radius,
 			fillColor: color,
