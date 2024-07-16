@@ -21,7 +21,6 @@ d3.json(url).then(function (data) {
 
 	// Function to set marker style:
 	function getMarkerStyle(magnitude, depth) {
-		console.log(`Mag: ${magnitude} - Depth: ${depth}`);
 		let radius = magnitude * 4; // size scaling factor
 		let color = depth >= 90.0 ? '#ff5f65' :
 								depth >= 70.0 ? '#fca35d' :
@@ -61,11 +60,21 @@ d3.json(url).then(function (data) {
 		//feature = L.geoJSON(data.features[i]).bindPopup(`<h1>${data.features[i].properties.place}</h1><h3>Magnitude ${data.features[i].properties.mag}</h3>`);
 		let lon = data.features[i].geometry.coordinates[0];
 		let lat = data.features[i].geometry.coordinates[1];
+		let datetime = new Date(data.features[i].properties.time);
+
 		let feature = L.circleMarker(
 			[lat, lon],
 			markerStyle
 		)
-		.bindPopup(`<h1>${data.features[i].properties.place}</h1><h3>Magnitude ${magnitude}</h3><h3>Depth ${depth}</h3>`);
+		.bindPopup(`
+			<h3>${data.features[i].properties.place}</h3>
+			<hr>
+			Magnitude: ${magnitude}<br>
+			Depth: ${depth}<br>
+			Coordinates: ${lat.toFixed(2)}, ${lon.toFixed(2)}
+			<br><br>
+			Observed:<br>${datetime}
+		`);
 
 		// add new layer to features_array
 		features_array.push(feature);
