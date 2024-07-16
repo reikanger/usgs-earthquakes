@@ -104,4 +104,51 @@ d3.json(url).then(function (data) {
 	L.control.layers(baseMaps, overlayMaps, {
 		collapsed: false
 	}).addTo(myMap);
+
+	// Legend
+	//
+	// Set position of legend
+	let legend = L.control({
+		position: 'bottomright'
+	});
+
+	legend.onAdd = function() {
+    let div = L.DomUtil.create('div', 'legend');
+
+    // Legend content (customize this)
+    div.innerHTML += '<h4>Earthquake Depth</h4>';
+    div.innerHTML += '<i style="background:#a3f600"></i> -10-10<br>';
+    div.innerHTML += '<i style="background:#dcf400"></i> 10-30<br>';
+    div.innerHTML += '<i style="background:#f7db11"></i> 30-50<br>';
+    div.innerHTML += '<i style="background:#fdb72a"></i> 50-70<br>';
+    div.innerHTML += '<i style="background:#fca35d"></i> 70-90<br>';
+    div.innerHTML += '<i style="background:#ff5f65"></i> 90+';
+
+    return div;
+	};
+
+	legend.addTo(myMap); // Add the legend to the map
+
+	// Stylize the legend
+	var legendCSS = `
+		.legend {
+			padding: 6px 8px;
+			background: white;
+			box-shadow: 0 0 15px rgba(0,0,0,0.2);
+			border-radius: 5px;
+		}
+		.legend i {
+			width: 18px;
+			height: 18px;
+			float: left;
+			margin-right: 8px;
+			opacity: 0.7;
+		}
+	`;
+
+	// Create a style element and add the CSS
+	var style = document.createElement('style');
+	style.innerHTML = legendCSS;
+	document.head.appendChild(style);
 });
+
