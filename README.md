@@ -1,4 +1,4 @@
-# Module 15 Challenge
+# USGS Earthquakes Visualization
 
 View the web application hosted on GitHub Pages:
 https://reikanger.github.io/module15/
